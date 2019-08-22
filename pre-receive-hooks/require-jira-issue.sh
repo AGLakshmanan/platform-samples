@@ -7,7 +7,7 @@
 # commit is associated with a ticket ID.
 #
 # As an example this hook ensures that the commit message contains a
-# JIRA issue formatted as [JIRA-<issue number>].
+# JIRA issue formatted as [<ticketID>-<issue number>].
 #
 # [1] https://help.github.com/en/enterprise/user/articles/working-with-pre-receive-hooks
 #
@@ -15,7 +15,7 @@
 set -e
 
 zero_commit='0000000000000000000000000000000000000000'
-msg_regex='[JIRA\-[0-9]+\]'
+msg_regex='[A-Z]+[-]+[0-9]{1,}'
 
 while read -r oldrev newrev refname; do
 
@@ -30,7 +30,7 @@ while read -r oldrev newrev refname; do
 			echo "ERROR:"
 			echo "ERROR: Your push was rejected because the commit"
 			echo "ERROR: $commit in ${refname#refs/heads/}"
-			echo "ERROR: is missing the JIRA Issue 'JIRA-123'."
+			echo "ERROR: is missing the JIRA Issue 'projectID-123'."
 			echo "ERROR:"
 			echo "ERROR: Please fix the commit message and push again."
 			echo "ERROR: https://help.github.com/en/articles/changing-a-commit-message"
